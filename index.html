@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFS Premium | Flex Furniture Studio Official</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;600;900&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; --dark: #050505; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--dark); color: white; scroll-behavior: smooth; }
+        .urdu-font { font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
+        
+        /* Zig-Zag 3D Logo */
+        .zigzag-logo {
+            width: 120px; height: 120px;
+            background: linear-gradient(135deg, #111, #444);
+            clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+            border: 4px solid var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Full Screen Categories */
+        .mega-section {
+            min-height: 100vh; background-size: cover; background-position: center; background-attachment: fixed;
+            position: relative; display: flex; align-items: center; border-bottom: 5px solid var(--gold);
+        }
+        .mega-section::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.8); }
+        .content { position: relative; z-index: 10; width: 100%; max-width: 1300px; margin: auto; padding: 50px 20px; }
+
+        .cat-badge { background: var(--gold); color: black; padding: 12px 50px; font-weight: 900; font-size: 2.2rem; border-radius: 50px; display: inline-block; margin-bottom: 50px; text-transform: uppercase; }
+        
+        .luxury-card { background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(212,175,55,0.4); border-radius: 40px; overflow: hidden; transition: 0.5s; }
+        .luxury-card:hover { transform: translateY(-15px); border-color: var(--gold); }
+
+        #imgModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; }
+        #imgModal img { max-width: 95%; max-height: 90vh; border: 4px solid var(--gold); border-radius: 20px; }
+
+        /* Floating Language Toggle */
+        .lang-btn { position: fixed; top: 30px; right: 30px; z-index: 1000; background: var(--gold); color: black; font-weight: 900; padding: 12px 25px; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <button onclick="toggleLang()" class="lang-btn" id="langBtn">URDU MODE</button>
+
+    <header class="h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=2000');"></div>
+        <div class="relative z-10 p-6">
+            <div class="zigzag-logo mx-auto mb-10"><span class="text-amber-500 text-4xl font-bold">FFS</span></div>
+            <h1 class="text-5xl md:text-8xl font-black uppercase tracking-tighter" id="mainTitle">Flex Furniture Studio</h1>
+            <p class="text-amber-500 text-xl md:text-3xl font-bold uppercase tracking-[0.6em] mt-4" id="mainSub">Exquisite Luxury Collection</p>
+            <div class="mt-12 flex justify-center gap-6">
+                <a href="#cat-sofa" class="bg-amber-600 text-black px-10 py-4 rounded-full font-black text-lg hover:bg-white transition uppercase">Explore Store</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="cat-sofa" class="mega-section" style="background-image: url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=2000');">
+        <div class="content">
+            <div class="text-center"><span class="cat-badge lang-sofa">Sofa Collection</span></div>
+            <div id="grid-sofa" class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10"></div>
+        </div>
+    </section>
+
+    <section id="cat-bed" class="mega-section" style="background-image: url('https://images.unsplash.com/photo-1505693419148-da301b928b13?q=80&w=2000');">
+        <div class="content">
+            <div class="text-center"><span class="cat-badge lang-bed">Royal Bed Sets</span></div>
+            <div id="grid-bed" class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10"></div>
+        </div>
+    </section>
+
+    <section id="cat-showcase" class="mega-section" style="background-image: url('https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=2000');">
+        <div class="content">
+            <div class="text-center"><span class="cat-badge lang-showcase">Almari & Showcase</span></div>
+            <div id="grid-showcase" class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10"></div>
+        </div>
+    </section>
+
+    <section id="cat-wood" class="mega-section" style="background-image: url('https://images.unsplash.com/photo-1538688547191-f8aa95758c70?q=80&w=2000');">
+        <div class="content">
+            <div class="text-center"><span class="cat-badge lang-wood">Wooden Furniture</span></div>
+            <div id="grid-wood" class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10"></div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-32 px-6 border-t-[12px] border-amber-600 text-center">
+        <h2 class="text-5xl md:text-7xl font-black mb-16 uppercase tracking-tighter" id="contactHeader">Contact Us</h2>
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+            <div class="bg-zinc-900 p-12 rounded-[40px] border-2 border-amber-600/30">
+                <p class="text-amber-500 font-black uppercase mb-4 tracking-widest">WhatsApp & Call</p>
+                <a href="tel:03109069362" class="text-3xl md:text-5xl font-black text-white">0310-9069362</a>
+            </div>
+            <div class="bg-zinc-900 p-12 rounded-[40px] border-2 border-amber-600/30">
+                <p class="text-amber-500 font-black uppercase mb-4 tracking-widest">Business Email</p>
+                <p class="text-xl md:text-2xl font-black text-white break-words">85065rizwan.email.com@gmail.com</p>
+            </div>
+        </div>
+        <div class="zigzag-logo mx-auto mb-6"><span class="text-amber-500 text-2xl font-bold">FFS</span></div>
+        <p class="text-2xl font-bold text-amber-500 uppercase tracking-widest">Flex Furniture Studio</p>
+        <p class="text-gray-500 mt-4 italic font-bold">© 2026 Designed for Excellence</p>
+    </footer>
+
+    <section class="bg-zinc-950 py-20 px-6 border-t border-white/10">
+        <div class="max-w-xl mx-auto bg-black p-10 rounded-[50px] border-2 border-amber-600 shadow-2xl">
+            <h3 class="text-center text-amber-500 font-black mb-8 uppercase tracking-widest">Stock Update Panel</h3>
+            <div class="space-y-4">
+                <input type="text" id="pName" placeholder="Item Name (e.g., Luxury Sofa)" class="w-full bg-zinc-900 p-4 rounded-xl text-white outline-none">
+                <input type="text" id="pPrice" placeholder="Price (Rs.)" class="w-full bg-zinc-900 p-4 rounded-xl text-white">
+                <select id="pCat" class="w-full bg-zinc-900 p-4 rounded-xl text-amber-500 font-black">
+                    <option value="sofa">Sofa Collection</option>
+                    <option value="bed">Bed Collection</option>
+                    <option value="showcase">Almari & Showcase</option>
+                    <option value="wood">Wooden Sets</option>
+                </select>
+                <input type="text" id="pImg" placeholder="Direct Image URL Link" class="w-full bg-zinc-900 p-4 rounded-xl text-white">
+                <button onclick="save()" class="w-full bg-amber-600 text-black font-black py-5 rounded-full uppercase tracking-widest hover:bg-white transition">Update Website</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="imgModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
+
+    <script>
+        let lang = 'en';
+        let stock = JSON.parse(localStorage.getItem('ffs_final_v11')) || [];
+
+        function toggleLang() {
+            lang = lang === 'en' ? 'ur' : 'en';
+            const btn = document.getElementById('langBtn');
+            const title = document.getElementById('mainTitle');
+            const sub = document.getElementById('mainSub');
+            const contact = document.getElementById('contactHeader');
+
+            if(lang === 'ur') {
+                btn.innerText = "ENGLISH MODE";
+                title.innerText = "فلیکس فرنیچر اسٹوڈیو";
+                sub.innerText = "اعلیٰ معیار کا فرنیچر کلیکشن";
+                contact.innerText = "رابطہ کریں";
+                document.body.classList.add('urdu-font');
+                updateTexts('ur');
+            } else {
+                btn.innerText = "URDU MODE";
+                title.innerText = "Flex Furniture Studio";
+                sub.innerText = "Exquisite Luxury Collection";
+                contact.innerText = "Contact Us";
+                document.body.classList.remove('urdu-font');
+                updateTexts('en');
+            }
+        }
+
+        function updateTexts(l) {
+            const trans = {
+                sofa: { en: "Sofa Collection", ur: "صوفہ سیٹ کلیکشن" },
+                bed: { en: "Royal Bed Sets", ur: "بیڈ سیٹ ڈیزائن" },
+                showcase: { en: "Almari & Showcase", ur: "الماری اور شوکیس" },
+                wood: { en: "Wooden Furniture", ur: "لکڑی کے سیٹ" }
+            };
+            document.querySelector('.lang-sofa').innerText = trans.sofa[l];
+            document.querySelector('.lang-bed').innerText = trans.bed[l];
+            document.querySelector('.lang-showcase').innerText = trans.showcase[l];
+            document.querySelector('.lang-wood').innerText = trans.wood[l];
+        }
+
+        function save() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const cat = document.getElementById('pCat').value;
+            const img = document.getElementById('pImg').value;
+            if(!name || !price || !img) return alert("Fill all details!");
+            stock.push({name, price, cat, img});
+            localStorage.setItem('ffs_final_v11', JSON.stringify(stock));
+            render();
+            alert("Added Successfully!");
+        }
+
+        function render() {
+            const grids = ['sofa', 'bed', 'showcase', 'wood'];
+            grids.forEach(g => document.getElementById('grid-'+g).innerHTML = '');
+            stock.forEach((item, index) => {
+                const target = document.getElementById('grid-' + item.cat);
+                if(target) {
+                    target.innerHTML += `
+                        <div class="luxury-card shadow-2xl">
+                            <img src="${item.img}" onclick="pop('${item.img}')" class="w-full h-96 object-cover cursor-zoom-in hover:scale-110 transition duration-700">
+                            <div class="p-8 text-center">
+                                <h4 class="text-3xl font-black text-white mb-2 uppercase">${item.name}</h4>
+                                <p class="text-amber-500 text-2xl font-black mb-6 italic">Rs. ${item.price}</p>
+                                <a href="https://wa.me/923109069362" class="bg-amber-600 text-black py-4 px-10 rounded-full font-black block uppercase text-sm">WhatsApp Order</a>
+                                <button onclick="del(${index})" class="text-red-500 text-xs mt-6 underline opacity-30 hover:opacity-100">Delete Item</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function pop(src) { document.getElementById('modalImg').src = src; document.getElementById('imgModal').style.display = 'flex'; }
+        function del(i) { if(confirm("Delete this?")){ stock.splice(i,1); localStorage.setItem('ffs_final_v11', JSON.stringify(stock)); render(); } }
+        window.onload = render;
+    </script>
+</body>
+</html>

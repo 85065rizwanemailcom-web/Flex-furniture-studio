@@ -1,0 +1,232 @@
+import http.server
+import socketserver
+import os
+
+# Create folders if they don't exist
+CATEGORIES = ["Sofa_Collection", "Wooden_Furniture", "Luxury_Items", "Others"]
+for folder in CATEGORIES:
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+class FlexBrandedStudioHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html; charset=utf-8')
+            self.end_headers()
+            
+            html = f"""
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Flex Furniture Studio | Premium Brand</title>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap');
+                    
+                    body {{ font-family: 'Poppins', sans-serif; margin: 0; background: #0a0a0a; color: #fff; }}
+
+                    /* Professional Brand Logo Section */
+                    header {{
+                        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                                    url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=80');
+                        background-size: cover;
+                        background-position: center;
+                        padding: 70px 20px;
+                        text-align: center;
+                        border-bottom: 5px solid #d4af37;
+                    }}
+
+                    .logo-container {{
+                        display: inline-block;
+                        border: 3px double #d4af37;
+                        padding: 15px 30px;
+                        background: rgba(0,0,0,0.6);
+                        backdrop-filter: blur(5px);
+                    }}
+
+                    .stylish-ff {{
+                        font-family: 'Great Vibes', cursive;
+                        font-size: 85px;
+                        color: #d4af37;
+                        margin: 0;
+                        line-height: 0.8;
+                    }}
+
+                    .brand-title {{
+                        font-family: 'Cinzel', serif;
+                        font-size: 24px;
+                        letter-spacing: 4px;
+                        color: #fff;
+                        margin: 10px 0 0;
+                        text-transform: uppercase;
+                        border-top: 1px solid #d4af37;
+                        padding-top: 5px;
+                    }}
+
+                    .brand-tag {{
+                        color: #d4af37;
+                        font-size: 10px;
+                        letter-spacing: 6px;
+                        text-transform: uppercase;
+                        margin-top: 5px;
+                    }}
+
+                    /* Permanent Contact Bar */
+                    .contact-box {{
+                        background: #151515;
+                        padding: 20px;
+                        text-align: center;
+                        border-bottom: 1px solid #333;
+                    }}
+
+                    .contact-link {{
+                        color: #d4af37;
+                        text-decoration: none;
+                        font-size: 14px;
+                        margin: 5px 0;
+                        display: block;
+                        letter-spacing: 1px;
+                    }}
+
+                    .btn-row {{
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                        margin-top: 15px;
+                    }}
+
+                    .btn {{
+                        padding: 12px 25px;
+                        border-radius: 4px;
+                        text-decoration: none;
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }}
+
+                    .wa {{ background: #25d366; color: #fff; }}
+                    .mail {{ border: 1px solid #d4af37; color: #d4af37; }}
+
+                    /* Collections Grid */
+                    .container {{ padding: 30px 20px; }}
+                    .section-h {{ font-family: 'Cinzel', serif; color: #d4af37; text-align: center; margin-bottom: 30px; }}
+
+                    .category-card {{
+                        height: 200px;
+                        margin-bottom: 20px;
+                        border-radius: 8px;
+                        position: relative;
+                        overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        text-decoration: none;
+                        border: 1px solid #222;
+                    }}
+
+                    .sofa {{ background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=500&q=60') center/cover; }}
+                    .wood {{ background: url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=500&q=60') center/cover; }}
+                    .lux {{ background: url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=500&q=60') center/cover; }}
+
+                    .card-overlay {{
+                        position: absolute;
+                        top: 0; left: 0; width: 100%; height: 100%;
+                        background: rgba(0,0,0,0.5);
+                    }}
+
+                    .category-card span {{
+                        position: relative;
+                        z-index: 1;
+                        color: #fff;
+                        font-size: 22px;
+                        font-weight: bold;
+                        letter-spacing: 3px;
+                        font-family: 'Cinzel', serif;
+                        text-shadow: 2px 2px 4px #000;
+                    }}
+
+                    footer {{ text-align: center; padding: 40px; color: #555; font-size: 10px; letter-spacing: 2px; }}
+                </style>
+            </head>
+            <body>
+
+                <header>
+                    <div class="logo-container">
+                        <div class="stylish-ff">FF</div>
+                        <h1 class="brand-title">Flex Furniture</h1>
+                        <div class="brand-tag">Studio</div>
+                    </div>
+                </header>
+
+                <div class="contact-box">
+                    <a href="tel:+923109069362" class="contact-link">📞 0310 9069362</a>
+                    <a href="mailto:85065rizwan.email.com@gmail.com" class="contact-link">✉️ 85065rizwan.email.com@gmail.com</a>
+                    <div class="btn-row">
+                        <a href="https://wa.me/923109069362" class="btn wa">WhatsApp</a>
+                        <a href="mailto:85065rizwan.email.com@gmail.com" class="btn mail">Email Us</a>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h2 class="section-h">Our Collections</h2>
+                    
+                    <a href="/category/Sofa_Collection" class="category-card sofa">
+                        <div class="card-overlay"></div>
+                        <span>Sofa Sets</span>
+                    </a>
+
+                    <a href="/category/Wooden_Furniture" class="category-card wood">
+                        <div class="card-overlay"></div>
+                        <span>Wooden Art</span>
+                    </a>
+
+                    <a href="/category/Luxury_Items" class="category-card lux">
+                        <div class="card-overlay"></div>
+                        <span>Luxury Items</span>
+                    </a>
+                </div>
+
+                <footer>
+                    PREMIUM CRAFTSMANSHIP | © 2026 FLEX STUDIO
+                </footer>
+
+            </body>
+            </html>
+            """
+            self.wfile.write(html.encode('utf-8'))
+        elif self.path.startswith('/category/'):
+            folder_name = self.path.split('/')[-1]
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html; charset=utf-8')
+            self.end_headers()
+            valid_exts = ('.jpg', '.jpeg', '.png', '.webp')
+            images = [f for f in os.listdir(folder_name) if f.lower().endswith(valid_exts)]
+            html = f"""
+            <html><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {{ font-family: sans-serif; margin: 0; background: #000; color: #fff; }}
+                .nav {{ background: #d4af37; padding: 20px; display: flex; align-items: center; color: #000; font-weight: bold; }}
+                .gallery {{ display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 5px; }}
+                .gallery img {{ width: 100%; height: 200px; object-fit: cover; }}
+            </style></head><body>
+            <div class="nav"><a href="/" style="text-decoration:none; color:#000;">← BACK</a><span style="margin-left:20px;">{folder_name}</span></div>
+            <div class="gallery">
+                {''.join([f'<img src="/{folder_name}/{img}">' for img in images]) if images else '<p style="padding:20px;">No images found in this folder.</p>'}
+            </div>
+            </body></html>
+            """
+            self.wfile.write(html.encode('utf-8'))
+        else:
+            return http.server.SimpleHTTPRequestHandler.do_GET(self)
+
+PORT = 8000
+socketserver.TCPServer.allow_reuse_address = True
+try:
+    with socketserver.TCPServer(("", PORT), FlexBrandedStudioHandler) as httpd:
+        print(f"Flex Furniture Studio is ONLINE: http://localhost:{PORT}")
+        httpd.serve_forever()
+except Exception as e:
+    print(f"Error: {e}")
